@@ -1,0 +1,22 @@
+#The Issue
+#I can login via the RDWeb interface on RDS01 from a Win10 desktop and connect to the published RDP 
+#desktop without issue (i.e. no error messages to the user) and no errors in the logs.  When I try to directly
+#RDP to RDS01, I successfully authenticate as a user (per the event log) but get an error stating that the user
+#doesn't have access to the system.  In the event log I get event id 1306 with the message of "Remote
+#Desktop Connection Broker Client failed to redirect the user <domain>\<test user>.  Error: NULL".  
+
+
+
+
+#Soloution
+
+For the RD Connection Broker do not redirect the session to RDSH in a new RDS environment, you need
+configure the default collection on RDCB in registry.
+
+You should create the registry value DefaultTsvUrl under the path below with tsv://MS Terminal Services Plugin.1.<collection alias> on RDCB.
+
+HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\ClusterSettings
+
+For the value, you could find it in Event Viewer on RDCB like below
+
+
